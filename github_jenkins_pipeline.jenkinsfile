@@ -1,0 +1,61 @@
+pipeline{
+    agent any
+    stages{
+        
+        stage ('Git-checkout'){
+            steps{
+               echo "Checking out form github"; 
+               git 'https://github.com/VinitPania/test.git'
+            }
+        }
+        
+        stage ('Config'){
+            steps{
+                echo "Checking out from config";
+                bat 'configure.bat'
+            }
+        }
+        
+        stage ('Build'){
+            steps{
+                echo "checking out from Build";
+                bat 'build.bat'
+                
+            }
+        }
+        
+        stage('Test'){
+            steps {
+                echo "Running the test";
+                bat 'test.bat'
+            }  
+        }
+    }
+
+    post{
+        always {
+            echo 'This will always run';
+        }
+
+        success {
+            echo 'This will run when pipeline is build successfully';
+        }
+
+        failure {
+            echo 'This will run when pipeline is not build successfully';
+        
+        }
+
+        unstable {
+            echo 'This will run when pipeline is not stable';
+        }
+
+        changed {
+            echo 'This will run when pipeline is changed from previous version';
+            echo 'This will run when pipeline is failed  in previous version but completed in the new version';
+        }
+
+    }
+    
+    
+}

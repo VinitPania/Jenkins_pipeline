@@ -1,0 +1,53 @@
+pipeline {
+    agent any 
+    stages {
+        stage('compile') {
+            steps{
+                echo 'Compiled successfully';
+            }
+        }
+
+        stage('Junit'){
+            steps{
+                echo 'Junit Passed Successfully';
+            }
+        }
+
+        stage('Quality-check'){
+            steps{
+                echo 'Quality check passed successfully ';
+            }
+        }
+
+        stage('Deploy'){
+            steps{
+                echo 'Deployed successfully';
+            }
+        }
+    }
+
+    post{
+        always {
+            echo 'This will always run';
+        }
+
+        success {
+            echo 'This will run when pipeline is build successfully';
+        }
+
+        failure {
+            echo 'This will run when pipeline is not build successfully';
+        
+        }
+
+        unstable {
+            echo 'This will run when pipeline is not stable';
+        }
+
+        changed {
+            echo 'This will run when pipeline is changed from previous version';
+            echo 'This will run when pipeline is failed  in previous version but completed in the new version';
+        }
+
+    }
+}    
