@@ -1,13 +1,12 @@
 pipeline{
     agent {
-        docker {image 'centos:latest'
+        docker {
+            image 'jenkins/agent'
         }
     }
 
     stages{
-        envitonment{
-            HOME="."
-        }
+        
         stage('test'){
             steps{
                 bat 'centos --version'
