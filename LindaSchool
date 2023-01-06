@@ -1,0 +1,41 @@
+pipeline{
+    agent any
+    tools{
+        maven 'MAVEN_HOME'
+    }
+
+    stages{
+
+        stage('Environment variables'){
+            steps{
+                echo "Running on: ${env.BUILD_ID} on url: ${env.JENKINS_URL} on workspace ${WORKSPACE} on java${env.JAVA_HOME}"
+            }
+        }
+
+        stage('checkout'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'git', url: 'https://github.com/VinitPania/LindaSchool.git']])
+            }
+        }
+    
+
+        stage("Building"){
+            steps{
+                bat 'mvn -Dmaven.test.failure.ignore=true clean package'
+            }
+        }
+
+        stage('Testing'){
+            steps{
+                bat 'mvn -Dmaven.test.failure.ignore=true clean test'
+            }
+        }
+
+        /*stage('Code Quality with Sonar'){
+            steps{
+
+            }
+        }*/
+    }
+
+}

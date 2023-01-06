@@ -1,0 +1,11 @@
+def name = 'bennet' 
+pipeline{
+    agent {label: windows}
+    stages{
+        stage('echo'){
+            steps{
+                echo 'Hellow ${name}'
+            }
+        }
+    }
+}
