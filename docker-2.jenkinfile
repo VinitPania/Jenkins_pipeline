@@ -1,0 +1,27 @@
+pipeline{
+    agent none 
+
+    stages{
+        stage(backend){
+            agent{
+                docker {
+                    image 'maven'
+                }
+            }
+            steps{
+                bat 'maven --version'
+            }
+        }
+
+        stage('frontend'){
+            agent{
+                docker{
+                    image 'ubuntu'
+                }
+            }
+            steps{
+                    bat 'ubuntu --version'
+            }
+        }
+    }
+}
