@@ -18,6 +18,12 @@ pipeline{
             }
         }
 
+        stage('build'){
+            steps{
+                echo "building project..."
+                bat  ("\"${tool 'MSBuild'}\"  EConsoleApp.sln  /p:Configuration=Debug /p:Platform=\"Any CPU\"")
+            }
+        }
         
     }
 }
