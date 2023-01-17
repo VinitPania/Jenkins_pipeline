@@ -50,6 +50,13 @@ pipeline{
             }
         }
 
+        stage("apply-css"){
+            steps{
+                echo 'Apply css-to report'
+                bat 'mvn site -DgenerateReports=faliure'
+            }
+        }
+
         stage('code quality test'){
             steps{
                 echo "code quality test... with sonarqube"
