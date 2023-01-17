@@ -74,18 +74,14 @@ pipeline{
             }
         }
 
-        stage('Clean Workspace '){
-            steps{
-                cleanWS()
-            }
-        }
+        
 
         
     }
 
     post{
         always{
-            archiveArtifacts artifacts: 'archiveArtifacts artifacts: \'**/*.jar\''
+            archiveArtifacts artifacts: 'archiveArtifacts artifacts: \'**/*.war\''
         }
     }
 }
