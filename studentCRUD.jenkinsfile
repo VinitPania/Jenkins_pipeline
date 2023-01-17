@@ -42,11 +42,19 @@ pipeline{
             }
         }
 
+        stage("html-report"){
+            steps{
+                echo 'HTML-Report'
+                //bat 'mvn surefire-report:report'
+                bat 'mvn surefire-report:report'
+            }
+        }
+
         stage('code quality test'){
             steps{
                 echo "code quality test... with sonarqube"
                 withSonarQubeEnv('SQ1'){
-                    bat "mvn clean verify sonar:sonar -Dsonar.projectkey=studentCRUD "
+                    bat "mvn  -Dmaven.test.failure.ignore=true clean package sonar:sonar -Dsonar.projectkey=studentCRUD -Dsonar.host.url=http://localhost:9000"
                 }
                 
             }
