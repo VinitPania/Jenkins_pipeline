@@ -7,14 +7,7 @@ pipeline{
 
     stages{
 
-        stage('Clean Workspace '){
-            steps{
-                cleanWS()
-            }
-        }
-
-
-        stage('Environment variables '){
+       stage('Environment variables '){
             steps{
                 echo "Running on ${env.JENKINS_URL} on location ${env.JENKINS_HOME} where build id is ${env.BUILD_ID} and name is ${env.BUILD_DISPLAY_NAME} on workspace ${env.WORKSPACE} using java "
             }
@@ -22,8 +15,8 @@ pipeline{
 
         stage('Checkout'){
             steps{
-                echo "checkouting ...."
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VinitPania/studentCURD.git']])
+                    echo "checkouting ...."
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VinitPania/studentCURD.git']])
             }
         }
 
@@ -31,7 +24,7 @@ pipeline{
             steps{
                 echo "building..."
                 //bat 'mvn clean verify package'
-                bat 'mvn -Dmaven.test.faliure.ignore=true clean package'
+                    bat 'mvn -Dmaven.test.faliure.ignore=true clean package'
             }
         }
 
@@ -63,6 +56,12 @@ pipeline{
             steps{
                 echo "deploying... with tomcat"
 
+            }
+        }
+
+        stage('Clean Workspace '){
+            steps{
+                cleanWS()
             }
         }
 
