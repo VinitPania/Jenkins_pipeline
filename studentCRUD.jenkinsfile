@@ -1,0 +1,73 @@
+pipeline{
+    agent any 
+    
+    tools{
+        maven  "MAVEN_HOME"
+    }
+
+    stages{
+        stage('Environment variables '){
+            steps{
+                echo "Running on ${env.JENKINS_URL} on location ${env.JENKINS_HOME} where build id is ${env.BUILD_ID} and name is ${env.BUILD_DISPLAY_NAME} on workspace ${env.WORKSPACE} using java "
+            }
+        }
+
+        stage('Checkout'){
+            steps{
+                echo "checkouting ...."
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/VinitPania/studentCURD.git']])
+            }
+        }
+
+        stage('build'){
+            steps{
+                echo "building..."
+                //bat "mvn clean verify package"
+                bat "mvn -Dmaven.test.faliure.ignore=true clean package"
+            }
+        }
+
+        stage('backup'){
+            steps{
+                echo "backup..."
+                bat ('xcopy E:\\devops\\jenkins_home\\.jenkins\\workspace\\studentCRUD  E:\\devops\\backup\\studentCRUD /y /v /s /e')
+            }
+        }
+
+        stage('test'){
+            steps{
+                echo "test..."
+                bat " mvn install -DskipTests=true"
+            }
+        }
+
+        stage('code quality test'){
+            steps{
+                echo "code quality test... with sonarqube"
+                withSonarQubeEnv('SQ1'){
+                    bat "mvn clean verify sonar:sonar -Dsonar.projectkey=studentCRUD "
+                }
+                
+            }
+        }
+
+        stage('deploy'){
+            steps{
+                echo "deploying... with tomcat"
+
+            }
+        }
+
+        stage('Clean Workspace '){
+            steps{
+                cleanWS()
+            }
+        }
+    }
+
+    post{
+        always{
+            archiveArtifacts artifacts: 'archiveArtifacts artifacts: \'**/*.jar\''
+        }
+    }
+}
