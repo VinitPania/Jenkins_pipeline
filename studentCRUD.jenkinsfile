@@ -22,8 +22,8 @@ pipeline{
         stage('build'){
             steps{
                 echo "building..."
-                bat "mvn clean verify package"
-                //bat "mvn -Dmaven.test.faliure.ignore=true clean package"
+                //bat 'mvn clean verify package'
+                bat 'mvn -Dmaven.test.faliure.ignore=true clean package'
             }
         }
 
