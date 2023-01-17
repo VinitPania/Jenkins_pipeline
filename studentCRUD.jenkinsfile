@@ -70,6 +70,7 @@ pipeline{
         stage('deploy'){
             steps{
                 echo "deploying... with tomcat"
+                deploy adapters: [tomcat8(credentialsId: 'a3280777-1f55-4dc9-8bd4-d1ca024f41ef', path: '', url: 'http://localhost:8041/')], contextPath: 'studentCRUD', onFailure: false, war: '**/*.war'
 
             }
         }
@@ -81,7 +82,9 @@ pipeline{
 
     post{
         always{
-            archiveArtifacts artifacts: 'archiveArtifacts artifacts: \'**/*.war\''
+            archiveArtifacts artifacts: '**/*.war,**/*.jar'
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
+            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
         }
     }
 }
