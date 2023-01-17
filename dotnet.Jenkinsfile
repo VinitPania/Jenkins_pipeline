@@ -11,6 +11,13 @@ pipeline{
             }
         }
 
+        stage('backup'){
+            steps{
+                echo "taking backup..."
+                bat  "xcopy E:\\devops\\jenkins_home\\.jenkins\\workspace\\msbuild_project  E:\devops\backup\msbuild_backup  /v /s "
+            }
+        }
+
         
     }
 }
