@@ -1,10 +1,7 @@
 pipeline{
     agent any
 
-    /*tools{
-        Msbuild 
-    } */
-
+    
     stages{
         
 
@@ -29,13 +26,13 @@ pipeline{
             }
         }
 
-        /*stage('build'){
+        stage('build'){
             steps{
                 
                 echo "building project..."
-                bat  ("\"${tool 'MSBuild'}\"  EConsoleApp.sln  /p:Configuration=Debug /p:Platform=\"Any CPU\"")
+                bat  'dotnet build  %WORKSPACE%\\msbuild_project\\ConsoleApp\\ConsoleApp.sln'
             }
-        }*/
+        }
         
     }
 }
