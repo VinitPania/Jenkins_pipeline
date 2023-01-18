@@ -49,9 +49,9 @@ pipeline{
                     /*def sonarRunner = tool name: 'SonarScannerMSBuild', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
                     bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=msbuild_project  -Dsonar.host.url=http://localhost:9000'*/
 
-                    bat 'dotnet sonarscanner begin /k:%WORKSPACE%\\ConsoleApp /d:sonar.host.url=http://localhost:9000 '
-                    bat 'dotnet build'
-                    bat 'dotnet sonarscanner end '
+                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\any\\SonarScanner.MSBuild.dll" begin  /d:sonar.login=${sonar-mvnwebaap} /k:"msbuild_project"'
+                    bat 'dotnet build %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
+                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end /d.sonar.login=${sonar-mvnwebaap} '
                 }  
             }
         }   
