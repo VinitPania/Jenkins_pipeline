@@ -46,7 +46,7 @@ pipeline{
             steps{
                 withSonarQubeEnv('SQ1'){
                     echo "====++++Code Quality++++===="
-                    bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=Dotnet  -Dsonar.host.url=http://localhost:9000'
+                    bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=msbuild_project  -Dsonar.host.url=http://localhost:9000'
                 }  
             }
         }   
