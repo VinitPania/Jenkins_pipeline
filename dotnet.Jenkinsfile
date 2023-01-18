@@ -30,7 +30,7 @@ pipeline{
             steps{
                 
                 echo "building project..."
-                bat  'dotnet build  %WORKSPACE%\\msbuild_project\\ConsoleApp\\ConsoleApp.sln'
+                bat  'dotnet build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
             }
         }
         
