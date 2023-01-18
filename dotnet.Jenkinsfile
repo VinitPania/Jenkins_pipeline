@@ -22,6 +22,7 @@ pipeline{
 
         stage('version'){
             steps{
+                echo "====++The version is ++++===="
                 bat 'dotnet --version'
             }
         }
@@ -39,9 +40,17 @@ pipeline{
                 echo "====++++Testing++++===="
                 bat 'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
             }
+        } 
+
+        stage('Code Quality Test'){
+            steps{
+                withSonarQubeEnv('SQ1'){
+                    echo "====++++Code Quality++++===="
+                    bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=Dotnet  -Dsonar.host.url=http://localhost:9000'
+                }  
+            }
         }   
 
-       
         
     }
 }
