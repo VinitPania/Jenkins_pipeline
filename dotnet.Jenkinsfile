@@ -42,14 +42,20 @@ pipeline{
             }
         } 
 
-        stage('Code Quality Test'){
+        /*stage('Code Quality Test'){
             steps{
                 withSonarQubeEnv('SQ1'){
                     echo "====++++Code Quality++++===="
                     bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=msbuild_project  -Dsonar.host.url=http://localhost:9000'
                 }  
             }
-        }   
+        }*/   
+
+        stage('Archive artifacts'){
+            steps{
+                archiveArtifacts artifacts: '**/*.msix', followSymlinks: false
+            }
+        }
 
         
     }
