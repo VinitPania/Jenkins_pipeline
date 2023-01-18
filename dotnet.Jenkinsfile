@@ -42,20 +42,21 @@ pipeline{
             }
         } 
 
-        /*stage('Code Quality Test'){
+        stage('Code Quality Test'){
             steps{
                 withSonarQubeEnv('SQ1'){
                     echo "====++++Code Quality++++===="
-                    bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=msbuild_project  -Dsonar.host.url=http://localhost:9000'
+                    /*def sonarRunner = tool name: 'SonarScannerMSBuild', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
+                    bat  'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln sonar:sonar  -Dsonar.projectkey=msbuild_project  -Dsonar.host.url=http://localhost:9000'*/
+
+                    bat 'dotnet sonarscanner begin /k:%WORKSPACE%\\ConsoleApp /d:sonar.host.url=http://localhost:9000 '
+                    bat 'dotnet build'
+                    bat 'dotnet sonarscanner end '
                 }  
             }
-        }*/   
+        }   
 
-        stage('Archive artifacts'){
-            steps{
-                archiveArtifacts artifacts: '**/*.msix', followSymlinks: false
-            }
-        }
+        
 
         
     }
