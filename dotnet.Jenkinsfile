@@ -30,9 +30,18 @@ pipeline{
             steps{
                 
                 echo "building project..."
-                bat  'dotnet build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
+                bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
             }
         }
+
+        stage('Test'){
+            steps{
+                echo "====++++Testing++++===="
+                bat 'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
+            }
+        }   
+
+       
         
     }
 }
