@@ -1,9 +1,9 @@
 pipeline{
     agent any
 
-    tools{
+    /*tools{
         Msbuild 
-    } 
+    } */
 
     stages{
         
