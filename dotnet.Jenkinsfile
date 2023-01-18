@@ -51,6 +51,7 @@ pipeline{
 
                     bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" begin   /k:"msbuild_project"'
                     bat 'dotnet build %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
+                    bat 'dotnet test %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
                     bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end  '
                 }  
             }
