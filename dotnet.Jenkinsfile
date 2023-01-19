@@ -55,7 +55,17 @@ pipeline{
                     bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end  '
                 }  
             }
-        }   
+        }  
+
+
+        post{
+            always{
+                archiveArtifacts artifacts: '**/*.exe', followSymlinks: false
+                archiveArtifacts artifacts: '**/*.dll', followSymlinks: false
+                archiveArtifacts artifacts: '**/*.pdb', followSymlinks: false
+                archiveArtifacts artifacts: '**/*.json', followSymlinks: false
+            }
+        } 
 
         
 
