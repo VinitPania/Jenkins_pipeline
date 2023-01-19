@@ -56,9 +56,9 @@ pipeline{
                 }  
             }
         }  
+    }
 
-
-        post{
+    post{
             always{
                 archiveArtifacts artifacts: '**/*.exe', followSymlinks: false
                 archiveArtifacts artifacts: '**/*.dll', followSymlinks: false
@@ -66,9 +66,4 @@ pipeline{
                 archiveArtifacts artifacts: '**/*.json', followSymlinks: false
             }
         } 
-
-        
-
-        
-    }
 }
