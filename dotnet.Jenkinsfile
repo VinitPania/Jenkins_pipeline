@@ -39,11 +39,11 @@ pipeline{
                 echo "building project..."
                 bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
                 script{
-                    if($BUILD_Status == 'success'){
+                    if($BUILD_STATUS == 'success'){
                         echo "Building successfully"
-                    }else if($BUILD_Status == 'unstable'){
+                    }else if($BUILD_STATUS == 'unstable'){
                         echo "Building unstable"
-                    }else ($BUILD_Status = 'failure'){
+                    }else ($BUILD_STATUS == 'failure'){
                         echo "Building failure"
                     }
                 }
