@@ -38,17 +38,18 @@ pipeline{
                 
                 echo "building project..."
                 bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
-                bat "def BUILD_STATUS=${curl --silent ${BUILD_URL}api/json | jq -r '.result'}"
+                
                 script{
-                    
+                    def currentStatus = currentBuild.getCurrentStage().getResult()
+                        echo "Current stage status: ${currentStatus}"
 
-                    if(${BUILD_STATUS} == 'success'){
-                        echo "Building successfully"
-                    }else if($BUILD_STATUS == 'unstable'){
-                        echo "Building unstable"
-                    }else ($BUILD_STATUS == 'failure'){
-                        echo "Building failure"
-                    }
+                    //if(${currentStep.result} == 'success'){
+                    //    echo "Building successfully"
+                    //}else if(${currentStep.result} == 'unstable'){
+                    //    echo "Building unstable"
+                    //}else ($BUILD_STATUS == 'failure'){
+                    //    echo "Building failure"
+                    //}
                 }
             }     
         }
