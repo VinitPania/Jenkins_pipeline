@@ -38,15 +38,21 @@ pipeline{
                 
                 echo "building project..."
                 bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
+
+                success{
+                    echo "Success"
+                }
+
+                failure{
+                    echo "Failure"
+                }
+            
+            
             }
 
-            success{
-                echo "Success"
-            }
 
-            failure{
-                echo "Failure"
-            }
+
+            
         }
 
         stage('Test'){
