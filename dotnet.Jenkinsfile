@@ -3,6 +3,12 @@ pipeline{
 
     
     stages{
+
+        stage('Clean Workspace'){
+            steps{
+                cleanWs()
+            }
+        }
         
 
         stage('checkout'){
@@ -31,7 +37,7 @@ pipeline{
             steps{
                 
                 echo "building project..."
-                bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln'
+                bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
             }
         }
 
@@ -55,7 +61,13 @@ pipeline{
                     bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end  '
                 }  
             }
-        }  
+        } 
+
+        stage('Deployment'){
+            steps{
+                bat 'xcopy  %WORKSPACE%\\ConsoleApp      E:\\devops\\virtualdir\\msbuild_project  /y /s'  
+            }
+        } 
     }
 
     post{
@@ -65,5 +77,8 @@ pipeline{
                 archiveArtifacts artifacts: '**/*.pdb', followSymlinks: false
                 archiveArtifacts artifacts: '**/*.json', followSymlinks: false
             }
+
+
+
         } 
 }
