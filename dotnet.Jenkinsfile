@@ -78,7 +78,10 @@ pipeline{
 
         stage('Deployment'){
             steps{
-                bat 'xcopy  %WORKSPACE%\\ConsoleApp      E:\\devops\\virtualdir\\msbuild_project  /y /s'  
+                bat 'net stop "w3svc" '
+                bat  'E:\\devops\\virtualdir\\msbuild_project\\ConsoleApp\\bin\\Debug\\netcoreapp3.1\\ConsoleApp.exe'
+                bat 'net start "w3svc"'
+                //bat 'xcopy  %WORKSPACE%\\ConsoleApp      E:\\devops\\virtualdir\\msbuild_project  /y /s'  
             }
         } 
     }
