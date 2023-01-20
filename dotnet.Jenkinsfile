@@ -39,6 +39,14 @@ pipeline{
                 echo "building project..."
                 bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
             }
+
+            success{
+                echo "Success"
+            }
+
+            failure{
+                echo "Failure"
+            }
         }
 
         stage('Test'){
@@ -78,7 +86,21 @@ pipeline{
                 archiveArtifacts artifacts: '**/*.json', followSymlinks: false
             }
 
+        success{
+            mail  body: 'The pipeline executed successfully',  from: 'vinit.pania@cloverinfotech.com',  subject: 'Pipeline Success', to: 'vinit.pania@cloverinfotech.com'
+        }
+        failure{
+            mail  body: 'The pipeline failed',  subject: 'Pipeline Failure', to: 'vinit.pania@cloverinfotech.com'
+        }
+        unstable{
+            mail  body: 'The pipeline is unstable',  subject: 'Pipeline unstable', to: 'vinit.pania@cloverinfotech.com'
+        }
+        changed{
+            mail  body: 'The pipeline has changed ', subject: 'Pipeline changed', to: 'vinit.pania@cloverinfotech.com'
+        }
 
 
-        } 
+
+
+    } 
 }
