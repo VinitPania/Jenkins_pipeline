@@ -38,11 +38,11 @@ pipeline{
                 
                 echo "building project..."
                 bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
-                bat "def BUILD_STATUS=$(curl --silent ${BUILD_URL}api/json | jq -r '.result')"
+                bat "def BUILD_STATUS=${curl --silent ${BUILD_URL}api/json | jq -r '.result'}"
                 script{
                     
 
-                    if($BUILD_STATUS == 'success'){
+                    if(${BUILD_STATUS} == 'success'){
                         echo "Building successfully"
                     }else if($BUILD_STATUS == 'unstable'){
                         echo "Building unstable"
