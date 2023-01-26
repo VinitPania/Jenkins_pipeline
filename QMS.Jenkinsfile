@@ -14,6 +14,13 @@ pipeline{
             }
         }
 
+        stage("DotNet Version"){
+            steps{
+                echo "====++++executing DotNet Version++++===="
+                bat 'dotnet --version'
+            }
+        }
+
 
         stage("checkout"){
             steps{
@@ -30,18 +37,13 @@ pipeline{
         }
 
 
-        stage("DotNet Version"){
-            steps{
-                echo "====++++executing DotNet Version++++===="
-                bat 'dotnet --version'
-            }
-        }
+        
 
 
         stage("Building"){
             steps{
                 echo "====++++executing Building++++===="
-                bat 'dotnet build  E:\\devops\\clover-code\\"19th JAN Application"\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln  /p:Configuration=Release'
+                bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /p:Configuration=Release'
             }
             post{
                 
