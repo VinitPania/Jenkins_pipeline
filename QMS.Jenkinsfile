@@ -1,18 +1,34 @@
 pipeline{
     agent any 
     stages{
-        stage(checkout){
+        stage('Cleanup Workspace'){
+            steps{
+                echo "====++Cleaning Workspace++++===="
+                cleanWs()
+            }
+        }
+
+        stage("workspace"){
+            steps{
+            echo 'Running on ${env.BUILD_ID} on URL ${env.JENKINS_URL} on workspace ${WORKSPACE}'
+            }
+        }
+
+
+        stage("checkout"){
             steps{
                 echo "========Checking Out========"
             }
         }
 
+
         stage("Backup"){
             steps{
                 echo "====++++executing Backup++++===="
-                bat  'xcopy'
+                bat  'xcopy %WORKSPACE%\\"19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
             }
         }
+
 
         stage("DotNet Version"){
             steps{
@@ -20,6 +36,7 @@ pipeline{
                 bat 'dotnet --version'
             }
         }
+
 
         stage("Building"){
             steps{
@@ -38,6 +55,7 @@ pipeline{
             }
         }
 
+        
         stage("Testing"){
             steps{
                 echo "====++++executing Testing++++===="
@@ -45,14 +63,16 @@ pipeline{
             }
         }
 
+
         stage("CodeQuality"){
             steps{
                 echo "====++++executing CodeQuality++++===="
                 withSonarQubeEnv('SQ1'){
-
+                    
                 }
             }
         }
+
 
         stage("Deploy"){
             steps{
@@ -63,6 +83,8 @@ pipeline{
         }
 
     }
+
+
     post{
         always{
             echo "========always========"
