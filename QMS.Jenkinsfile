@@ -25,7 +25,7 @@ pipeline{
         stage("Backup"){
             steps{
                 echo "====++++executing Backup++++===="
-                bat  'xcopy "E:\\devops\\jenkins_home\\.jenkins\\workspace\\"19th JAN Application""   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
+                bat  'xcopy "E:\\devops\\jenkins_home\\.jenkins\\workspace\\19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
             }
         }
 
