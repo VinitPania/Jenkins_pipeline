@@ -10,7 +10,7 @@ pipeline{
 
         stage("workspace"){
             steps{
-            echo 'Running on ${env.BUILD_ID} on URL ${env.JENKINS_URL} on workspace ${WORKSPACE}'
+            echo 'Running on' ${env.BUILD_ID} 'on URL' ${env.JENKINS_URL} 'on workspace' ${WORKSPACE}
             }
         }
 
@@ -25,7 +25,7 @@ pipeline{
         stage("Backup"){
             steps{
                 echo "====++++executing Backup++++===="
-                bat  'xcopy %WORKSPACE%\\"19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
+                bat  'xcopy E:\\devops\\jenkins_home\\.jenkins\\workspace\\"19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
             }
         }
 
@@ -68,7 +68,7 @@ pipeline{
             steps{
                 echo "====++++executing CodeQuality++++===="
                 withSonarQubeEnv('SQ1'){
-                    
+
                 }
             }
         }
