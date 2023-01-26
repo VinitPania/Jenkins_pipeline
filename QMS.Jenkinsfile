@@ -1,12 +1,12 @@
 pipeline{
     agent any 
     stages{
-        stage('Cleanup Workspace'){
-            steps{
-                echo "====++Cleaning Workspace++++===="
-                cleanWs()
-            }
-        }
+        // stage('Cleanup Workspace'){
+        //     steps{
+        //         echo "====++Cleaning Workspace++++===="
+        //         cleanWs()
+        //     }
+        // }
 
         stage("workspace"){
             steps{
