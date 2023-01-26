@@ -25,7 +25,7 @@ pipeline{
         stage("Backup"){
             steps{
                 echo "====++++executing Backup++++===="
-                bat  'xcopy "%WORKSPACE%\\19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
+                bat  'xcopy "E:\\devops\\clover-code\\19th JAN Application"   "E:\\devops\\backup\\QMS-Backup"  /v /s /y'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline{
         stage("Building"){
             steps{
                 echo "====++++executing Building++++===="
-                bat 'dotnet build  %WORKSPACE%\\"19th JAN Application"\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln  /p:Configuration=Release'
+                bat 'dotnet build  E:\\devops\\clover-code\\"19th JAN Application"\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln  /p:Configuration=Release'
             }
             post{
                 
