@@ -36,7 +36,12 @@ pipeline{
             }
         }
 
-
+        stage('Restore'){
+            steps{
+                echo "====++++Restore++++===="
+                bat  'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
+            }
+        }
         
 
 
@@ -61,7 +66,7 @@ pipeline{
         stage("Testing"){
             steps{
                 echo "====++++executing Testing++++===="
-                bat 'dotnet test'
+                bat 'dotnet test "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
             }
         }
 
@@ -70,6 +75,10 @@ pipeline{
             steps{
                 echo "====++++executing CodeQuality++++===="
                 withSonarQubeEnv('SQ1'){
+                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" begin   /k:"QMS_project"'
+                    bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /p:Configuration=Release'
+                    bat 'dotnet test "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"' 
+                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end'
 
                 }
             }
@@ -79,7 +88,7 @@ pipeline{
         stage("Deploy"){
             steps{
                 echo "====++++executing Deploy++++===="
-                bat  'xcopy'
+                bat  'xcopy "E:\\devops\\clover-code\\19th JAN Application"   "E:\\devops\\virtualdir\\19th JAN Application"  /v /s /y'
             }
            
         }
@@ -89,13 +98,23 @@ pipeline{
 
     post{
         always{
-            echo "========always========"
+            echo "========Archive Artifacts========"
+            archiveArtifacts artifacts: '**/*.exe', followSymlinks: false
+            archiveArtifacts artifacts: '**/*.dll', followSymlinks: false
+            archiveArtifacts artifacts: '**/*.pdb', followSymlinks: false
+            archiveArtifacts artifacts: '**/*.json', followSymlinks: false
         }
         success{
             echo "========pipeline executed successfully ========"
         }
         failure{
             echo "========pipeline execution failed========"
+        }
+        unstable {
+            echo "====++++unstable++++===="
+        }
+        changed{
+            echo "====++++changed++++===="
         }
     }
 }
