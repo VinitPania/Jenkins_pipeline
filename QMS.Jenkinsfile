@@ -36,19 +36,19 @@ pipeline{
             }
         }
 
-        stage('Restore'){
-            steps{
-                echo "====++++Restore++++===="
-                bat  'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
-            }
-        }
+        // stage('Restore'){
+        //     steps{
+        //         echo "====++++Restore++++===="
+        //         bat  'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
+        //     }
+        // }
         
 
 
         stage("Building"){
             steps{
                 echo "====++++executing Building++++===="
-                bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /p:Configuration=Release'
+                bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /t:Rebuild /p:Configuration=Release'
             }
             post{
                 
