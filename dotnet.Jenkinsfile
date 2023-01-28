@@ -35,7 +35,8 @@ pipeline{
                 steps{
                 
                     echo "building project..."
-                    bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
+                    bat  'dotnet  msbuild %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release'
+                    //bat  'dotnet  build  %WORKSPACE%\\ConsoleApp\\ConsoleApp.sln /p:Configuration=Release' 
                 
                     // script{
                     //     def currentStatus = currentBuild.getCurrentStage().getResult()
