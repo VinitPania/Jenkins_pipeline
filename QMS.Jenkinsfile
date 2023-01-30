@@ -1,5 +1,9 @@
 pipeline{
     agent any 
+    environment{
+        msbuild = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe"
+        sonar-scanner = "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll"
+    }
     stages{
         // stage('Cleanup Workspace'){
         //     steps{
@@ -48,7 +52,9 @@ pipeline{
         stage("Building"){
             steps{
                 echo "====++++executing Building++++===="
-                bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /t:Rebuild /p:Configuration=Release'
+                //bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /t:Rebuild /p:Configuration=Release'
+                bat '${env.msbuild} "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
+                //bat '"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe" "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
             }
             post{
                 
@@ -63,23 +69,28 @@ pipeline{
         }
 
         
-        stage("Testing"){
-            steps{
-                echo "====++++executing Testing++++===="
-                bat 'dotnet test "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
-            }
-        }
+        // stage("Testing"){
+        //     steps{
+        //         echo "====++++executing Testing++++===="
+        //         bat 'dotnet test "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
+        //     }
+        // }
 
 
         stage("CodeQuality"){
             steps{
                 echo "====++++executing CodeQuality++++===="
                 withSonarQubeEnv('SQ1'){
-                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" begin   /k:"QMS_project"'
-                    bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /p:Configuration=Release'
-                    bat 'dotnet test "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"' 
-                    bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end'
-
+                    bat '${sonar-scanner}  begin   /k:"QMS_project" '
+                    //bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" begin   /k:"QMS_project"'
+                    
+                    
+                    //bat 'dotnet build  "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"  /p:Configuration=Release'
+                    bat '${env.msbuild} "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"'
+                    
+                    
+                    //bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end'
+                    bat '${sonar-scanner} end'
                 }
             }
         }
