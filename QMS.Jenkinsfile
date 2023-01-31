@@ -4,7 +4,7 @@ pipeline{
         MSBUILD = "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe"
         SONARSC = "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll"
         SLN     = "E:\\devops\\clover-code\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.sln"
-        CSPROJ  = "E:\devops\19th JAN Application\QMS-project final-18 August\clover.qms.web\clover.qms.web.csproj"
+        CSPROJ  = "E:\\devops\\19th JAN Application\\QMS-project final-18 August\\clover.qms.web\\clover.qms.web.csproj"
     }
 
     stages{
@@ -26,7 +26,7 @@ pipeline{
                 echo "====++++executing DotNet Version++++===="
                 bat 'dotnet --version'
                 echo "${MSBUILD}"
-                echo "${SCONARSC}"
+                echo "${SONARSC}"
                 echo "${SLN}"
                 echo "${CSPROJ}"
             }
@@ -80,6 +80,7 @@ pipeline{
             steps{
                 echo "====++++executing Testing++++===="
                 bat """ "${MSBUILD}" "${CSPROJ}" """ 
+                bat """ "${MSBUILD}" "${CSPROJ}" """
             }
         }
 
@@ -88,7 +89,7 @@ pipeline{
             steps{
                 echo "====++++executing CodeQuality++++===="
                 withSonarQubeEnv('SQ1'){
-                    bat """ dotnet "${SCONARSC}"  begin   /k:"QMS_project" """
+                    bat """ dotnet "${SONARSC}"  begin   /k:"QMS_project" """
                     //bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" begin   /k:"QMS_project"'
                     
                     
@@ -97,7 +98,7 @@ pipeline{
                     
                     
                     //bat 'dotnet "C:\\Users\\shewine\\.dotnet\\tools\\.store\\dotnet-sonarscanner\\5.10.0\\dotnet-sonarscanner\\5.10.0\\tools\\net5.0\\any\\SonarScanner.MSBuild.dll" end'
-                    bat  """ dotnet "${SCONARSC}" end """
+                    bat  """ dotnet "${SONARSC}" end """
                 }
             }
         }
