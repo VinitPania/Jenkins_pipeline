@@ -1,0 +1,13 @@
+pipeline{
+    agent any
+    stages{
+        stage("aws cli -version"){
+            steps{
+                echo "========executing A========"
+                bat 'aws --version'
+                bat 'aws s3 ls'
+            }
+            
+        }
+    }    
+}
